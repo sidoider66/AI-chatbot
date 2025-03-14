@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with GPT</title>
+</head>
+<body>
+    <h1>Chat with ChatGPT</h1>
+    <textarea id="userInput" rows="4" cols="50" placeholder="Type your message here..."></textarea><br>
+    <button id="sendButton">Send</button>
+    <h2>Response:</h2>
+    <div id="response"></div>
+
+    <script>
+        document.getElementById('sendButton').onclick = function() {
+            const userInput = document.getElementById('userInput').value;
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: userInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').innerText = data.response;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        };
+    </script>
+</body>
+</html>
